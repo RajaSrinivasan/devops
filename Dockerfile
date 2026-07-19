@@ -64,7 +64,7 @@ RUN git clone https://github.com/RajaSrinivasan/toolkit.git
 RUN cd toolkit/adalib; alr -n build
 RUN cd toolkit/utilities; python3 buildall.py; cp bin/* $HOME/bin
 
-RUN alr install gnat_arm_elf
+RUN alr --force install gnat_arm_elf
 RUN alr -n toolchain --select gnat_arm_elf
 
 COPY stm32f4crc/stm32f4crc $PROJECTS/stm32f4crc

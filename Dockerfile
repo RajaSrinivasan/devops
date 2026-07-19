@@ -55,11 +55,10 @@ ENV PROJECTS=$HOME/Prj
 WORKDIR $PROJECTS
 
 # Build the native tools
-# RUN alr -n toolchain --select gnat_native gprbuild
 
-RUN alr -n install gnat_native=15.1.2
-RUN alr -n install gprbuild
-RUN alr -n toolchain --select gnat_native=15.1.2
+RUN alr -n install gnat_native gprbuild
+RUN alr -n toolchain --select gnat_native gprbuild
+
 
 RUN git clone https://github.com/RajaSrinivasan/toolkit.git
 RUN cd toolkit/adalib; alr -n build

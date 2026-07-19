@@ -56,7 +56,7 @@ WORKDIR $PROJECTS
 
 # Build the native tools
 
-RUN alr -n install gnat_native gprbuild
+RUN alr -n install gnat_native gprbuild gnat_arm_elf
 RUN alr -n toolchain --select gnat_native gprbuild
 
 

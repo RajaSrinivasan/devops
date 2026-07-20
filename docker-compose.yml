@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: ./native
+      dockerfile: Dockerfile
+    image: devopsnative:latest
+
+  toolchain:
+    build:
+      context: ./build
+      dockerfile: Dockerfile
+    image: devopsbuild:latest

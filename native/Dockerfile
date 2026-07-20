@@ -26,7 +26,7 @@ RUN apt-get update && \
     apt-get clean
 
 # Install Python + pip
-RUN apt-get install -y python3 python3-pip && \
+RUN apt-get install -y python3 python3-pip python3-venv && \
     apt-get clean
 
 # Set root password
@@ -54,18 +54,11 @@ RUN mv bin/alr $HOME/bin
 ENV PROJECTS=$HOME/Prj
 WORKDIR $PROJECTS
 
-# Build the native tools
 
 RUN alr -n install gnat_native gprbuild
 RUN alr -n toolchain --select gnat_native gprbuild
 
-
-RUN git clone https://github.com/RajaSrinivasan/toolkit.git
-RUN cd toolkit/adalib; alr -n build
-RUN cd toolkit/utilities; python3 buildall.py; cp bin/* $HOME/bin
-
-#COPY ../stm32f4crc/stm32f4crc $PROJECTS/stm32f4crc
-#RUN cd $PROJECTS/stm32f4crc; gcc -o stm32f4crc *.c ; cp stm32f4crc $HOME/bin
+RUN git clone https://github.com/nanopb/nanopb.git
 
 RUN ssh-keygen -A
 

@@ -26,7 +26,7 @@ RUN apt-get update && \
     apt-get clean
 
 # Install Python + pip
-RUN apt-get install -y python3 python3-pip && \
+RUN apt-get install -y python3 python3-pip python3-venv&& \
     apt-get clean
 
 # Set root password
@@ -63,6 +63,7 @@ RUN cd toolkit/utilities; python3 buildall.py; cp bin/* $HOME/bin
 RUN alr -n install gnat_arm_elf gprbuild
 RUN alr -n toolchain --select gnat_arm_elf
 
+RUN python3 -m venv venv
 RUN apt-get install -y \
     usbutils \
     openocd \

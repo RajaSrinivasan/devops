@@ -5,7 +5,7 @@ ARG VS_CODE_SERVER_PORT=8800
 ARG WGET_ARGS="-q --show-progress --progress=bar:force:noscroll"
 ARG TARGETARCH
 ARG TARGETOS
-ARG ALRBINBASE="https://github.com/alire-project/alire/releases/download/v2.1.1/alr-2.1.1-bin"
+ARG ALRBINBASE="https://github.com/alire-project/alire/releases/download/v2.1.0/alr-2.1.0-bin"
 
 # Set default shell during Docker image build to bash
 SHELL [ "/bin/bash" , "-c" ]
@@ -56,16 +56,16 @@ WORKDIR $PROJECTS
 
 # Build the native tools
 
+
+
 RUN alr -n install gnat_native gprbuild
 RUN alr -n toolchain --select gnat_native gprbuild
-
 
 RUN git clone https://github.com/RajaSrinivasan/toolkit.git
 RUN cd toolkit/adalib; alr -n build
 RUN cd toolkit/utilities; python3 buildall.py; cp bin/* $HOME/bin
 
-RUN alr -n --force install gnat_arm_elf
-RUN alr -n toolchain --select gnat_arm_elf
+
 
 COPY stm32f4crc/stm32f4crc $PROJECTS/stm32f4crc
 RUN cd $PROJECTS/stm32f4crc; gcc -o stm32f4crc *.c ; cp stm32f4crc $HOME/bin
@@ -74,6 +74,9 @@ RUN apt-get install -y \
     usbutils \
     openocd \
     stlink-tools
+
+RUN alr -n install --prefix=$HOME/armelf gnat_arm_elf gprbuild
+RUN alr -n toolchain --select gnat_arm_elf gprbuild
 
 RUN ssh-keygen -A
 

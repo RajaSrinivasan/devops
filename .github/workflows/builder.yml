@@ -27,14 +27,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/myimage
       - name: Build and Push
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
-          push: ${{ github.event_name == 'push' }}
-          tags: |
-            ghcr.io/${{ rajasrinivasan }}/devops:latest
-            ghcr.io/${{ rajasrinivasan }}/devops:${{ github.sha }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: 
           cache-from: type=gha
           cache-to: type=gha,mode=max
